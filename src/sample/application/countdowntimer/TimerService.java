@@ -68,6 +68,12 @@ public class TimerService extends Service {
 					}
 
 					private void showAlam() {
+
+						Intent intent = new Intent(mContext, TimerService.class);
+						mContext.stopService(intent);
+						intent = new Intent(mContext, AlarmDialog.class);
+						intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+						mContext.startActivity(intent);
 					}
 				});
 			}

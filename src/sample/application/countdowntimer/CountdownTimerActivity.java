@@ -86,6 +86,18 @@ public class CountdownTimerActivity extends Activity {
 			}
 		});
 
+		btnStop.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(mContext, TimerService.class);
+				mContext.stopService(i);
+				btnStop.setEnabled(false);
+				btnStart.setEnabled(true);
+				sb.setEnabled(true);
+			}
+		});
+
 	}
 
 	static void showTime(int timeSeconds) {
