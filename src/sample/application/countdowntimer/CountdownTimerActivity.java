@@ -1,7 +1,10 @@
 package sample.application.countdowntimer;
 
+import java.text.SimpleDateFormat;
+
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -11,6 +14,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
@@ -67,6 +72,45 @@ public class CountdownTimerActivity extends Activity {
 				}
 			}
 		});
+
+		btnStart.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(mContext, TimerService.class);
+				intent.putExtra("counter", timeLeft);
+				startService(intent);
+				btnStart.setEnabled(false);
+				btnStop.setEnabled(true);
+				sb.setEnabled(false);
+			}
+		});
+
+	}
+
+	static void showTime(int timeSeconds) {
+		SimpleDateFormat form = new SimpleDateFormat("mm:ss");
+		tv.setText(form.format(timeSeconds * 1000));
+	}
+
+	public static void countdown(int counter) {
+		showTime(counter);
+		timeLeft = counter;
+		if (counter % 60 == 0) {
+			sb.setProgress(counter / 60);
+		} else {
+			sb.setProgress(counter / 60 + 1);
+		}
+
+		if (counter != 0) {
+			btnStop.setEnabled(true);
+			btnStart.setEnabled(false);
+			sb.setEnabled(false);
+		} else {
+			btnStop.setEnabled(false);
+			btnStart.setEnabled(false);
+			sb.setEnabled(true);
+		}
 	}
 
 	private Drawable drawScale() {

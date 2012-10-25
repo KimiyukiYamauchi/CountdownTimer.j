@@ -12,7 +12,7 @@
         android:label="@string/app_name">
         <activity
             android:name=".CountdownTimerActivity"
-            android:label="@string/title_activity_countdown_timer" >
+            android:label="@string/title_activity_countdown_timer" android:configChanges="keyboardHidden|orientation|screenSize" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
